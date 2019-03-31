@@ -1,0 +1,14 @@
+topic: ~sample_talk_02()
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Replying to speech
+#u:(~hello) ~hello
+
+concept:(色) [赤 青 緑]
+
+u:(私の好きな色は_~色です) $favorite_color=$1 はい、覚えました
+u:(私の好きな色はなんですか？) ^first["あなたの好きな色は $favorite_color です" "知りません"]
+u:(私の好きな色を忘れてください) ^clear(favorite_color) はい、忘れました
+
+u:(私の好きな色を表示して) %show_favorite_color はい、表示します

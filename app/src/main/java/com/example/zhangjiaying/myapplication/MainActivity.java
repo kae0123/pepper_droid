@@ -1,9 +1,9 @@
 package com.example.zhangjiaying.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.constraint.ConstraintLayout;
 
-import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
@@ -17,14 +17,17 @@ import com.aldebaran.qi.sdk.object.conversation.Topic;
 
 public class MainActivity extends RobotActivity implements RobotLifecycleCallbacks{
 
-    private static final String TAG = "QiChatbotActivity";
-
     // Store the Chat action.
     private Chat chat;
+    private QiChatbot qiChatbot;
+    private ConstraintLayout mainFrame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mainFrame = findViewById(R.id.mainFrame);
 
         // Register the RobotLifecycleCallbacks to this Activity.
         QiSDK.register(this, this);
@@ -32,7 +35,6 @@ public class MainActivity extends RobotActivity implements RobotLifecycleCallbac
 
     @Override
     protected void onDestroy() {
-        // Unregister the RobotLifecycleCallbacks for this Activity.
         QiSDK.unregister(this, this);
         super.onDestroy();
     }
@@ -41,46 +43,70 @@ public class MainActivity extends RobotActivity implements RobotLifecycleCallbac
     public void onRobotFocusGained(QiContext qiContext) {
         // Create a topic.
         Topic topic = TopicBuilder.with(qiContext) // Create the builder using the QiContext.
-                .withResource(R.raw.sample_talk_01) // Set the topic resource.
+                .withResource(R.raw.sample_talk_02) // Set the topic resource.
                 .build(); // Build the topic.
 
         // Create a new QiChatbot.
-        QiChatbot qiChatbot = QiChatbotBuilder.with(qiContext)
+        qiChatbot = QiChatbotBuilder.with(qiContext)
                 .withTopic(topic)
                 .build();
+
+        qiChatbot.addOnBookmarkReachedListener(bookmark -> {
+            if("show_favorite_color".equals(bookmark.getName())){
+                updateTabletColor();
+            }
+        });
 
         // Create a new Chat action.
         chat = ChatBuilder.with(qiContext)
                 .withChatbot(qiChatbot)
                 .build();
 
-        // Add an on started listener to the Chat action.
-        chat.addOnStartedListener(() -> Log.i(TAG, "Discussion started."));
-
-        // Run the Chat action asynchronously.
-        Future<Void> chatFuture = chat.async().run();
-
-        // Add a lambda to the action execution.
-        chatFuture.thenConsume(future -> {
-            if (future.hasError()) {
-                Log.e(TAG, "Discussion finished with error.", future.getError());
-            }
-        });
+        chat.async().run();
 
     }
 
+    private void updateTabletColor() {
+        //qiChatbotがnullの時に動くとクラッシュしてしまうため
+        if(qiChatbot == null){
+            return;
+        }
+        String tabletColor = qiChatbot.variable("favorite_color").getValue();
+        //final をつけて変数を定数に変える
+        final int androidTabletColor = getAndroidTabletColor(tabletColor); //画面に特定の色を表示させたい時、intで指定する
+
+        //qichatがバックグラウンドで動いているため、必ず画面を更新させるためにUIスレッド上で動かす
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mainFrame.setBackgroundColor(androidTabletColor);
+            }
+        });
+    }
+
+    private int getAndroidTabletColor(String color) {
+        switch(color){
+            case "赤":
+                return Color.RED;
+            case "緑":
+                return Color.GREEN;
+            case  "青":
+                return Color.BLUE;
+            default:
+                return 0;
+        }
+    }
+
+
     @Override
     public void onRobotFocusLost() {
-        // The robot focus is lost.
 
-        // Remove on started listeners from the Chat action.
-        if (chat != null) {
-            chat.removeAllOnStartedListeners();
-        }
     }
 
     @Override
     public void onRobotFocusRefused(String reason) {
-        // The robot focus is refused.
+
     }
 }
+
+
