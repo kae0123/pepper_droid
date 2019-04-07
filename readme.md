@@ -20,7 +20,12 @@ qichatの書き方を間違えると、listenerが起動しない
 画面のボタンとqichatの連携
 
 # Lesson06
-pepperを動かす
-execute
-animation
+pepperを動かす  
+execute  
+animation  
 (変数名注意)
+
+# Lesson07
+同期非同期  
+Futureクラス  
+chaining
