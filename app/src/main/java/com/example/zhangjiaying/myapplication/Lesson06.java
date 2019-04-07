@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class MainActivity extends RobotActivity implements RobotLifecycleCallbacks{
+public class Lesson06 extends RobotActivity implements RobotLifecycleCallbacks{
 
     // Store the Chat action.
     private QiChatbot qiChatbot;
@@ -197,6 +197,7 @@ public class MainActivity extends RobotActivity implements RobotLifecycleCallbac
         }
     }
 }
+
 
 
 

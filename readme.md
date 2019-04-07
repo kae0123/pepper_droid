@@ -13,8 +13,14 @@ qichat(futureなし)
 
 # Lesson04
 qichat2(記憶など)  
-qichatの書き方を間違えると、listnerが起動しない
+qichatの書き方を間違えると、listenerが起動しない
 
 # Lesson05
-画面レイアウト
+画面レイアウト  
 画面のボタンとqichatの連携
+
+# Lesson06
+pepperを動かす
+execute
+animation
+(変数名注意)
