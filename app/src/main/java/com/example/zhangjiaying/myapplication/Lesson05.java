@@ -24,7 +24,7 @@ import com.aldebaran.qi.sdk.object.conversation.Topic;
 
 import java.util.Map;
 
-public class MainActivity extends RobotActivity implements RobotLifecycleCallbacks{
+public class Lesson05 extends RobotActivity implements RobotLifecycleCallbacks{
 
     // Store the Chat action.
     private QiChatbot qiChatbot;

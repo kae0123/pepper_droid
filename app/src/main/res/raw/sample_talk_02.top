@@ -11,4 +11,4 @@ u:(私の好きな色は _~色 です) $favorite_color=$1 はい、覚えまし�
 u:(私の好きな色はなんですか？) ^first["あなたの好きな色は $favorite_color です" "知りません"]
 u:(私の好きな色を忘れてください) ^clear(favorite_color) はい、忘れました
 
-u:(私の好きな色を表示して) %show_favorite_color はい、表示します
+u:(私の好きな色を表示して) %show_favorite_color %button_clicked はい、表示します
