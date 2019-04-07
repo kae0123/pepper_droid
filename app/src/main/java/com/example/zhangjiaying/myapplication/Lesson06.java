@@ -10,10 +10,14 @@ import com.aldebaran.qi.Consumer;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
+import com.aldebaran.qi.sdk.builder.AnimateBuilder;
+import com.aldebaran.qi.sdk.builder.AnimationBuilder;
 import com.aldebaran.qi.sdk.builder.ChatBuilder;
 import com.aldebaran.qi.sdk.builder.QiChatbotBuilder;
 import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
+import com.aldebaran.qi.sdk.object.actuation.Animate;
+import com.aldebaran.qi.sdk.object.actuation.Animation;
 import com.aldebaran.qi.sdk.object.conversation.AutonomousReactionImportance;
 import com.aldebaran.qi.sdk.object.conversation.AutonomousReactionValidity;
 import com.aldebaran.qi.sdk.object.conversation.BaseQiChatExecutor;
@@ -189,6 +193,17 @@ public class Lesson06 extends RobotActivity implements RobotLifecycleCallbacks{
                 color = Color.RED;
             }
 
+            Animation animation = AnimationBuilder.with(getQiContext())
+                    .withResources(R.raw.elephant_a001)
+                    .build();
+
+            // animation アクションの作成
+            Animate animate = AnimateBuilder.with(getQiContext())
+                    .withAnimation(animation)
+                    .build();
+
+            animate.run();
+
             displayColor(color);
         }
 
@@ -197,7 +212,6 @@ public class Lesson06 extends RobotActivity implements RobotLifecycleCallbacks{
         }
     }
 }
-
 
 
 
