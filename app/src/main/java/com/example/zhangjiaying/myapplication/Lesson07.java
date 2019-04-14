@@ -1,6 +1,7 @@
 package com.example.zhangjiaying.myapplication;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
@@ -69,7 +70,15 @@ public class Lesson07 extends RobotActivity implements RobotLifecycleCallbacks {
                 .andThenCompose(aVoid -> introductionSay.async().run())
                 .andThenCompose(aVoid -> animate.async().run())
                 .andThenCompose(aVoid -> endingSay.async().run());
-        //endingSay.run();
+
+        chainFuture.thenConsume(voidFuture -> {
+            if(voidFuture.hasError()){
+                Log.i("MyTag", "The Chain finish with error: " + voidFuture.getErrorMessage());
+            }
+            else{
+                Log.i("MyTag", "The chain finish without error: ");
+            }
+        });
     }
 
     @Override
