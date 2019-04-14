@@ -34,3 +34,8 @@ chaining
 Futureアクションのキャンセル  
 ボタンによるキャンセル  
 センサによるキャンセル
+
+# Lesson09
+人を認識させる -> 人の年齢や性別を取得する  
+AtomicBoolean変数  
+(バグ : age=-1, gender=UNKNOWN)

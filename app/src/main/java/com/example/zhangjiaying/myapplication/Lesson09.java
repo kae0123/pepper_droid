@@ -22,7 +22,7 @@ import com.aldebaran.qi.sdk.object.touch.TouchSensor;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ChainingActionActivity extends RobotActivity implements RobotLifecycleCallbacks {
+public class Lesson09 extends RobotActivity implements RobotLifecycleCallbacks {
 
     private Button startChainButton;
     private Say helloSay;
