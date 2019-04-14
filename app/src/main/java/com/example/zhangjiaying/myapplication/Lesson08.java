@@ -18,7 +18,7 @@ import com.aldebaran.qi.sdk.object.conversation.Say;
 import com.aldebaran.qi.sdk.object.touch.Touch;
 import com.aldebaran.qi.sdk.object.touch.TouchSensor;
 
-public class ChainingActionActivity extends RobotActivity implements RobotLifecycleCallbacks {
+public class Lesson08 extends RobotActivity implements RobotLifecycleCallbacks {
 
     private Button startChainButton;
     private Say helloSay;

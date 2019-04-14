@@ -29,3 +29,8 @@ animation
 同期非同期  
 Futureクラス  
 chaining
+
+# Lesson08
+Futureアクションのキャンセル  
+ボタンによるキャンセル  
+センサによるキャンセル

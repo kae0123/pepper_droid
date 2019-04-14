@@ -67,7 +67,7 @@ public class Lesson07 extends RobotActivity implements RobotLifecycleCallbacks {
         Future<Void> helloFuture = Future.waitAll(helloSayFuture, helloAnimateFuture);
 
         Future<Void> chainFuture = helloFuture
-                .andThenCompose(aVoid -> introductionSay.async().run())
+                .thenCompose(aVoid -> introductionSay.async().run())
                 .andThenCompose(aVoid -> animate.async().run())
                 .andThenCompose(aVoid -> endingSay.async().run());
 
