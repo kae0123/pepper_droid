@@ -1,41 +1,46 @@
-# Lesson01
-hello human
+# 概要
+チュートリアル動画に沿って行ったもの。
+MainActivity.javaなどにコピペして実行する必要有。
 
-# Lesson02
-会話、listen
+# 詳細
+- Lesson01
+  - hello human
 
-# Lesson03
-qichat
-時と場合により同じコードでも動かないことがある
+- Lesson02
+  - 会話、listen
 
-# Lesson03_2
-qichat(futureなし)
+- Lesson03
+  - qichat
+  - 時と場合により同じコードでも動かないことがある
 
-# Lesson04
-qichat2(記憶など)  
-qichatの書き方を間違えると、listenerが起動しない
+- Lesson03_2
+  - qichat(futureなし)
 
-# Lesson05
-画面レイアウト  
-画面のボタンとqichatの連携
+- Lesson04
+  - qichat2(記憶など)  
+  - qichatの書き方を間違えると、listenerが起動しない
 
-# Lesson06
-pepperを動かす  
-execute  
-animation  
-(変数名注意)
+- Lesson05
+  - 画面レイアウト  
+  - 画面のボタンとqichatの連携
 
-# Lesson07
-同期非同期  
-Futureクラス  
-chaining
+- Lesson06
+  - pepperを動かす  
+  - execute  
+  - animation  
+  - (変数名注意)
 
-# Lesson08
-Futureアクションのキャンセル  
-ボタンによるキャンセル  
-センサによるキャンセル
+- Lesson07
+  - 同期非同期  
+  - Futureクラス  
+  - chaining
 
-# Lesson09
-人を認識させる -> 人の年齢や性別を取得する  
-AtomicBoolean変数  
-(バグ : age=-1, gender=UNKNOWN)
+- Lesson08
+  - Futureアクションのキャンセル  
+  - ボタンによるキャンセル  
+  - センサによるキャンセル
+
+- Lesson09
+  - 人を認識させる -> 人の年齢や性別を取得する  
+  - AtomicBoolean変数  
+  - (バグ? : age=-1, gender=UNKNOWN)
