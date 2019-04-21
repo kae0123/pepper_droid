@@ -123,7 +123,7 @@ public class ChainingActionActivity extends RobotActivity implements RobotLifecy
     public void onRobotFocusGained(QiContext qiContext) {
         humanAwareness = qiContext.getHumanAwareness();
         humanAwareness.addOnHumansAroundChangedListener(humans -> {
-            Log.i("MyTag", "I detected " + humans.size() + " arround me.");
+            Log.i("MyTag", "I detected " + humans.size() + " around me.");
 
             if(humans.size()>0){
                 Human human = humans.get(0);
