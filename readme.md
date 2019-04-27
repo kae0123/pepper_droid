@@ -49,3 +49,8 @@ MainActivity.javaなどにコピペして実行する必要有。
   - 写真を撮る
   - TakePictureBuilder
   - setImageBitmap (ディプレイに写真を表示させる)
+
+- Lesson11
+  - オートノマスアビリティ
+  - 頭の止め方(BasicAwarness)
+  - 腕などの身体の止め方

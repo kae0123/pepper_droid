@@ -3,4 +3,5 @@ topic: ~picture_topic()
 #concept:(hello) [hello hi hey "good morning" greetings]
 
 # Replying to speech
-u:(写真を撮って) はい、では笑ってください ^execute(takePictureExecutor) おお、いいですね！ ^endDiscuss(pictureTaken)
+
+u:(写真を撮って) はい、では笑ってください ^execute(takePictureExecutor, takePicture) おお、いいですね！ ^endDiscuss(pictureTaken)

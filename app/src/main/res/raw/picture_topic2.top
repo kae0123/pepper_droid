@@ -1,0 +1,12 @@
+topic: ~picture_topic2()
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Replying to speech
+u:(じっとして) ^execute(takePictureExecutor, holdAutonomousAbilities)
+proposal: %stop_move
+はい、じっとしてます
+
+u:(写真を撮って) はい、では笑ってください ^execute(takePictureExecutor, takePicture)
+proposal: %photo_done
+おお、いいですね！ ^endDiscuss(pictureTaken)

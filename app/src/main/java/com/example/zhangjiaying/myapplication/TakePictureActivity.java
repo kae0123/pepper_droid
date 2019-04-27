@@ -11,17 +11,24 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.ChatBuilder;
+import com.aldebaran.qi.sdk.builder.HolderBuilder;
 import com.aldebaran.qi.sdk.builder.QiChatbotBuilder;
 import com.aldebaran.qi.sdk.builder.TakePictureBuilder;
 import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 import com.aldebaran.qi.sdk.design.activity.conversationstatus.SpeechBarDisplayStrategy;
 import com.aldebaran.qi.sdk.object.camera.TakePicture;
+import com.aldebaran.qi.sdk.object.conversation.AutonomousReactionImportance;
+import com.aldebaran.qi.sdk.object.conversation.AutonomousReactionValidity;
 import com.aldebaran.qi.sdk.object.conversation.BaseQiChatExecutor;
+import com.aldebaran.qi.sdk.object.conversation.BodyLanguageOption;
+import com.aldebaran.qi.sdk.object.conversation.Bookmark;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.QiChatExecutor;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
+import com.aldebaran.qi.sdk.object.holder.AutonomousAbilitiesType;
+import com.aldebaran.qi.sdk.object.holder.Holder;
 import com.aldebaran.qi.sdk.object.image.EncodedImage;
 import com.aldebaran.qi.sdk.object.image.TimestampedImageHandle;
 
@@ -35,6 +42,8 @@ public class TakePictureActivity extends RobotActivity implements RobotLifecycle
     private ImageView imageView;
     private Future<Void> chatFuture;
     private QiChatbot qiChatbot;
+    private Holder holder;
+    private Map<String, Bookmark> bookmarks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +66,16 @@ public class TakePictureActivity extends RobotActivity implements RobotLifecycle
 
     @Override
     public void onRobotFocusGained(QiContext qiContext) {
-        Topic topic = TopicBuilder.with(qiContext)
-                .withResource(R.raw.picture_topic)
+        holder = HolderBuilder.with(qiContext)
+                .withAutonomousAbilities(AutonomousAbilitiesType.BACKGROUND_MOVEMENT,
+                        AutonomousAbilitiesType.BASIC_AWARENESS)
                 .build();
+
+        Topic topic = TopicBuilder.with(qiContext)
+                .withResource(R.raw.picture_topic2)
+                .build();
+
+        bookmarks = topic.getBookmarks();
 
         qiChatbot = QiChatbotBuilder.with(qiContext)
                 .withTopic(topic)
@@ -67,6 +83,9 @@ public class TakePictureActivity extends RobotActivity implements RobotLifecycle
 
         qiChatbot.addOnEndedListener(endReason -> {
             Log.i("MyTag", "qiChatbot ended. Reason: " + endReason);
+            if(chatFuture != null && !chatFuture.isDone()){
+                chatFuture.requestCancellation();
+            }
         });
 
         Map<String, QiChatExecutor> executors = new HashMap<>();
@@ -92,6 +111,15 @@ public class TakePictureActivity extends RobotActivity implements RobotLifecycle
         }
     }
 
+    public void goToBookmark(String bookmarkName){
+        Bookmark bookmark = bookmarks.get(bookmarkName);
+        if(bookmark!=null){
+            qiChatbot.async().goToBookmark(bookmark,
+                    AutonomousReactionImportance.HIGH,
+                    AutonomousReactionValidity.IMMEDIATE);
+        }
+    }
+
     @Override
     public void onRobotFocusRefused(String reason) {
 
@@ -105,17 +133,45 @@ public class TakePictureActivity extends RobotActivity implements RobotLifecycle
 
         @Override
         public void runWith(List<String> params) {
-            TakePicture takePicture = TakePictureBuilder.with(getQiContext()).build();
+            if(params.size()>0){
+                switch (params.get(0)){
+                    case "holdAutonomousAbilities":
+                        //オートノマスライフ停止
+                        holder.hold();
+                        //腕の動き停止
+                        qiChatbot.setSpeakingBodyLanguage(BodyLanguageOption.DISABLED);
+                        goToBookmark("stop_move");
+                        break;
 
-            TimestampedImageHandle timestampedImageHandle = takePicture.run();
-            EncodedImage encodedImage = timestampedImageHandle.getImage().getValue();
-            ByteBuffer data = encodedImage.getData();
+                    case "takePicture":
+                        //写真を撮る
+                        TakePicture takePicture = TakePictureBuilder.with(getQiContext()).build();
 
-            byte[] dataArray = data.array();
+                        TimestampedImageHandle timestampedImageHandle = takePicture.run();
+                        EncodedImage encodedImage = timestampedImageHandle.getImage().getValue();
+                        ByteBuffer data = encodedImage.getData();
 
-            Bitmap bitmap = BitmapFactory.decodeByteArray(dataArray, 0, dataArray.length);
+                        byte[] dataArray = data.array();
 
-            displayPicture(bitmap);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(dataArray, 0, dataArray.length);
+
+                        displayPicture(bitmap);
+
+                        // オートノマスライフモード復活
+                        holder.release();
+                        //腕の動き復活(今回はなし)
+                        //qiChatbot.setSpeakingBodyLanguage(BodyLanguageOption.NEUTRAL);
+                        goToBookmark("photo_done");
+                        break;
+
+                    default:
+                        Log.i("MyTag", "Unknown parameter given to takePictureExecutor: "+params.get(0));
+                }
+            }
+
+
+
+
         }
 
         @Override
