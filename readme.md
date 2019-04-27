@@ -44,3 +44,9 @@ MainActivity.javaなどにコピペして実行する必要有。
   - 人を認識させる -> 人の年齢や性別を取得する  
   - AtomicBoolean変数  
   - (バグ? : age=-1, gender=UNKNOWN)
+
+- Lesson10
+  - 写真を撮る
+  - TakePictureBuilder
+  - setImageBitmap (ディプレイに写真を表示させる)
+  - setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY) : バグ有り
