@@ -49,4 +49,3 @@ MainActivity.javaなどにコピペして実行する必要有。
   - 写真を撮る
   - TakePictureBuilder
   - setImageBitmap (ディプレイに写真を表示させる)
-  - setSpeechBarDisplayStrategy(SpeechBarDisplayStrategy.OVERLAY) : バグ有り

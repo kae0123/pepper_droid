@@ -67,6 +67,9 @@ public class Lesson10 extends RobotActivity implements RobotLifecycleCallbacks {
 
         qiChatbot.addOnEndedListener(endReason -> {
             Log.i("MyTag", "qiChatbot ended. Reason: " + endReason);
+            if(chatFuture != null && !chatFuture.isDone()){
+                chatFuture.requestCancellation();
+            }
         });
 
         Map<String, QiChatExecutor> executors = new HashMap<>();
