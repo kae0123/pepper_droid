@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TakePictureActivity extends RobotActivity implements RobotLifecycleCallbacks {
+public class Lesson12 extends RobotActivity implements RobotLifecycleCallbacks {
 
     private ImageView imageView;
     private Future<Void> chatFuture;
